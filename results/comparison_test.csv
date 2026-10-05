@@ -1,0 +1,5 @@
+,log loss,ROC AUC,accuracy,precision,recall,F1
+Logistic regression (threshold 0.19),0.3442,0.7436,0.8036,0.3276,0.4596,0.3825
+Random forest (threshold 0.24),0.3257,0.7659,0.8576,0.4554,0.3872,0.4186
+Baseline: always on time,,,0.8676,0.0,0.0,0.0
+Baseline: departure delay >= 5 min,,,0.8567,0.3961,0.1567,0.2246

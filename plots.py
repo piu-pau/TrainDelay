@@ -12,7 +12,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
-from sklearn.metrics import confusion_matrix, log_loss
+from sklearn.metrics import confusion_matrix, log_loss, roc_auc_score, roc_curve
 
 FIG_DIR = Path(__file__).parent / "figures"
 FIG_DIR.mkdir(exist_ok=True)
@@ -172,7 +172,10 @@ def feature_weights(names, values, xlabel, title, filename, top_n=None):
     if top_n is not None:
         w_df = w_df.loc[w_df["value"].abs().nlargest(top_n).index]
     w_df = w_df.sort_values("value", ascending=False)
-    colors = [ORANGE if v > 0 else BLUE for v in w_df["value"]]
+    if (w_df["value"] >= 0).all():
+        colors = [BLUE] * len(w_df)  # importances: no direction, one colour
+    else:
+        colors = [ORANGE if v > 0 else BLUE for v in w_df["value"]]
     fig, ax = plt.subplots(figsize=(6, 1.5 + 0.25 * len(w_df)))
     sns.barplot(data=w_df, x="value", y="feature", hue="feature", palette=colors,
                 legend=False, saturation=1, ax=ax)
@@ -180,4 +183,22 @@ def feature_weights(names, values, xlabel, title, filename, top_n=None):
     ax.set_xlabel(xlabel)
     ax.set_ylabel("")
     ax.set_title(title)
+    _save(fig, filename)
+
+
+def roc_curves(y_true, probas, title, filename):
+    """ROC curves of several models. probas: dict {model name: P(delayed)}."""
+    fig, ax = plt.subplots(figsize=(5.5, 5))
+    for (name, proba), color in zip(probas.items(), [BLUE, ORANGE]):
+        fpr, tpr, _ = roc_curve(y_true, proba)
+        sns.lineplot(x=fpr, y=tpr, color=color, linewidth=2, errorbar=None,
+                     label=f"{name} (AUC {roc_auc_score(y_true, proba):.3f})", ax=ax)
+    ax.plot([0, 1], [0, 1], color="#898781", linestyle="--", linewidth=1,
+            label="Random guessing (AUC 0.5)")
+    ax.set_xlabel("False positive rate (on-time trains flagged as delayed)")
+    ax.set_ylabel("True positive rate (delays found)")
+    ax.set_xlim(0, 1)
+    ax.set_ylim(0, 1)
+    ax.set_title(title)
+    ax.legend(loc="lower right", fontsize=9)
     _save(fig, filename)
