@@ -75,12 +75,12 @@ def convert(root_folder: str, output_path: str) -> None:
 
     written = 0
     skipped = 0
-    with open(output_path, "w", newline="", encoding="utf-8") as out:
-        writer = csv.DictWriter(out, fieldnames=COLUMNS)
+    with open(output_path, "w", newline = "", encoding = "utf-8") as out:
+        writer = csv.DictWriter(out, fieldnames = COLUMNS)
         writer.writeheader()
 
         for file_path in json_files:
-            with open(file_path, "r", encoding="utf-8") as f:
+            with open(file_path, "r", encoding = "utf-8") as f:
                 trains = json.load(f)
 
             for train in trains:

@@ -39,9 +39,9 @@ def split_data(df):
     """Random 70 / 15 / 15 split with a fixed seed."""
     X, y = df[FEATURES], df["delayed"]
     X_train, X_temp, y_train, y_temp = train_test_split(
-        X, y, test_size=0.30, random_state=RANDOM_SEED)
+        X, y, test_size = 0.30, random_state = RANDOM_SEED)
     X_val, X_test, y_val, y_test = train_test_split(
-        X_temp, y_temp, test_size=0.50, random_state=RANDOM_SEED)
+        X_temp, y_temp, test_size = 0.50, random_state = RANDOM_SEED)
     print(f"train {len(X_train)}, validation {len(X_val)}, test {len(X_test)}")
     return X_train, X_val, X_test, y_train, y_val, y_test
 
@@ -56,7 +56,7 @@ def choose_threshold(y_val, val_proba):
     thresholds = np.round(np.arange(0.05, 0.91, 0.01), 2)
     scores = pd.DataFrame({
         "threshold": thresholds,
-        "precision": [precision_score(y_val, val_proba >= t, zero_division=0) for t in thresholds],
+        "precision": [precision_score(y_val, val_proba >= t, zero_division = 0) for t in thresholds],
         "recall": [recall_score(y_val, val_proba >= t) for t in thresholds],
         "F1": [f1_score(y_val, val_proba >= t) for t in thresholds],
     })
@@ -73,7 +73,7 @@ def evaluate(model, name, X_part, y_part, threshold):
         "log loss": log_loss(y_part, proba),
         "ROC AUC": roc_auc_score(y_part, proba),
         "accuracy": accuracy_score(y_part, pred),
-        "precision": precision_score(y_part, pred, zero_division=0),
+        "precision": precision_score(y_part, pred, zero_division = 0),
         "recall": recall_score(y_part, pred),
         "F1": f1_score(y_part, pred),
     }
@@ -82,16 +82,16 @@ def evaluate(model, name, X_part, y_part, threshold):
         print(f"{k + ':':<11}{v:.4f}")
     print("confusion matrix [[TN FP] [FN TP]]:")
     print(confusion_matrix(y_part, pred))
-    print(classification_report(y_part, pred, digits=3))
+    print(classification_report(y_part, pred, digits = 3))
     return metrics
 
 
 def save_test_predictions(method_name, X_test, y_test, test_proba, threshold):
     """Save test-set predictions so that compare_methods.py can compare the methods."""
-    RESULTS_DIR.mkdir(exist_ok=True)
+    RESULTS_DIR.mkdir(exist_ok = True)
     pd.DataFrame({
         "departureDelay": X_test["departureDelay"].to_numpy(),
         "delayed": y_test.to_numpy(),
         "proba": test_proba,
         "threshold": threshold,
-    }).to_csv(RESULTS_DIR / f"{method_name}_test_predictions.csv", index=False)
+    }).to_csv(RESULTS_DIR / f"{method_name}_test_predictions.csv", index = False)

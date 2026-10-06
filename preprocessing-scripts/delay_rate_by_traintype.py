@@ -26,7 +26,7 @@ def analyze(root_folder: str) -> None:
     stats = defaultdict(lambda: [0, 0])
 
     for file_path in json_files:
-        with open(file_path, "r", encoding="utf-8") as f:
+        with open(file_path, "r", encoding = "utf-8") as f:
             trains = json.load(f)
 
         for train in trains:
@@ -40,7 +40,7 @@ def analyze(root_folder: str) -> None:
             if delay >= DELAY_THRESHOLD_MINUTES:
                 stats[train_type][0] += 1
 
-    sorted_types = sorted(stats.items(), key=lambda x: -x[1][1])
+    sorted_types = sorted(stats.items(), key = lambda x: -x[1][1])
 
     print(f"{'trainType':<12}{'total':>10}{'delayed':>10}{'delay %':>10}")
     print("-" * 42)

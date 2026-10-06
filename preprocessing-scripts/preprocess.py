@@ -69,7 +69,7 @@ def preprocess(input_folder: Path, output_folder: Path) -> None:
     total_in = 0
     total_out = 0
     for input_path in json_files:
-        with open(input_path, "r", encoding="utf-8") as f:
+        with open(input_path, "r", encoding = "utf-8") as f:
             trains = json.load(f)
 
         kept = [t for t in map(process_train, trains) if t is not None]
@@ -77,9 +77,9 @@ def preprocess(input_folder: Path, output_folder: Path) -> None:
         total_out += len(kept)
 
         output_path = output_folder / input_path.relative_to(input_folder)
-        output_path.parent.mkdir(parents=True, exist_ok=True)
-        with open(output_path, "w", encoding="utf-8") as f:
-            json.dump(kept, f, ensure_ascii=False, indent=2)
+        output_path.parent.mkdir(parents = True, exist_ok = True)
+        with open(output_path, "w", encoding = "utf-8") as f:
+            json.dump(kept, f, ensure_ascii = False, indent = 2)
 
     print(f"Files processed:  {len(json_files)}")
     print(f"Trains in input:  {total_in}")
