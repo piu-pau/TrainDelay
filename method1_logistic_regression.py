@@ -78,7 +78,7 @@ test_proba = best_model.predict_proba(X_test)[:, 1]
 common.save_test_predictions("method1", X_test, y_test, test_proba, best_threshold)
 
 
-# Coefficients: features are standardized so the sizes are comparable
+# Features are standardized so the sizes are comparable
 names = [n.split("__")[1] for n in best_model.named_steps["preprocess"].get_feature_names_out()]
 coefs = best_model.named_steps["clf"].coef_[0]
 print("\n20 largest coefficients:")

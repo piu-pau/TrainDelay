@@ -1,11 +1,10 @@
-"""
-Figures for the train delay models. Used by the method scripts, e.g.
+# Figures for the train delay models. Used by the method scripts, e.g.
 
-    import plots
-    plots.label_distribution(y, "method1_label_distribution.png")
+    # import plots
+    # plots.label_distribution(y, "method1_label_distribution.png")
 
-All figures are saved to the figures/ folder.
-"""
+# All figures are saved to the figures/ folder.
+
 
 import numpy as np
 import pandas as pd
@@ -89,7 +88,7 @@ def probability_curves(model, df_train, df_val, feature_columns, title, filename
         ("hour", np.linspace(0, 24, 200), "Scheduled departure hour (Finnish time)"),
     ]
 
-    # Sample of training + validation points, jittered around 0 and 1 so they are visible
+    # Sample of training + validation points, scattered around 0 and 1 so they are visible
     trval_all = pd.concat([df_train, df_val])
     rng = np.random.default_rng(seed)
     trval = trval_all.sample(1500, random_state = seed).copy()
