@@ -3,7 +3,7 @@ Computes the delay rate (>=5 min late at final stop) broken down by
 trainType, using the collapsed origin/destination data structure.
 
 Usage:
-    python delay_rate_by_traintype.py filtered-data4/
+    python delay_rate_by_traintype.py processed-data/
 """
 
 import json

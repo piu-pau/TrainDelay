@@ -1,5 +1,5 @@
 """
-Flattens all train JSON files under a folder (e.g. filtered-data4/) into
+Flattens all train JSON files under a folder (e.g. processed-data/) into
 a single CSV file with one row per train.
 
 Besides the raw fields, adds the derived features used by the models:
@@ -11,7 +11,7 @@ Besides the raw fields, adds the derived features used by the models:
 Trains with missing values are skipped.
 
 Usage:
-    python to_csv.py filtered-data4/ trains.csv
+    python to_csv.py processed-data/ trains.csv
 """
 
 import csv

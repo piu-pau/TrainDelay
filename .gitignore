@@ -4,7 +4,7 @@
 # Raw and filtered train data (large; kept local only).
 # final data is so small that we can commit it (27 MB)
 junadata/*
-!junadata/filtered-data4/
+!junadata/processed-data/
 
 # Python
 __pycache__/

@@ -1,10 +1,10 @@
 """
 Counts total trains across all processed JSON files (with "origin" and
-"destination" fields, e.g. from filtered-data4/), and checks how many
+"destination" fields, e.g. from processed-data/), and checks how many
 ended up >=5 minutes late at their final stop vs. on time.
 
 Usage:
-    python count_trains.py filtered-data4/
+    python count_trains.py processed-data/
 """
 
 import json
