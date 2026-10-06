@@ -13,15 +13,20 @@
 
 ## Preprocessing
 
-The raw data is too big for GitHub, so it is only stored locally in `junadata/original-data`. `preprocess.py` reads it and saves the result to `junadata/processed-data`. For each train it:
+The raw data is too big for GitHub so it is only stored locally in `junadata/original-data`. `preprocess.py` reads it and saves the result to `junadata/processed-data`. For each train it:
 
 1. keeps long-distance trains that were not cancelled
 2. keeps only the first and last stop and counts the stops
 3. removes fields we don't need
 4. removes empty trains and museum trains
 
+Then `to_csv.py` turns processed-data into `junadata/trains.csv`, which is the file the methods read. trains.csv is not committed, so run this before the methods:
+
+```
+python preprocessing-scripts/to_csv.py junadata/processed-data/ junadata/trains.csv
+```
+
 Other scripts:
 
-- `to_csv.py` - turns processed-data into trains.csv
 - `count_trains.py` - counts the trains and how many are delayed
 - `delay_rate_by_traintype.py` - delay rate for each train type
